@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'">
+<title>CRM «Прозвон»</title>
+<link rel="stylesheet" href="../node_modules/@fontsource/golos-text/500.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/golos-text/600.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/golos-text/700.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/pt-sans/400.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/pt-sans/700.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/jetbrains-mono/400.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/jetbrains-mono/500.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+
+    <div class="topbar">
+      <h1>CRM «Прозвон» — MVP</h1>
+      <span class="badge">кликабельный черновик</span>
+      <div class="spacer"></div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="companies">Компании</button>
+        <button class="tab-btn" data-tab="funnel">Воронка</button>
+        <button class="tab-btn" data-tab="presale">Пресейл</button>
+      </div>
+    </div>
+    <div class="note-bar">Прототип по блоку «база прозвона + прозвон» — данные сохраняются на этом компьютере и не пропадают после закрытия приложения.
+      <strong>Без связи с проектным запросом</strong> — это граница блока, обсуждали отдельно.</div>
+
+    <div class="layout">
+
+      <main>
+
+        <div class="filters-bar" id="filtersBar">
+          <div class="filter-item">
+            <label>База / направление</label>
+            <select class="field" id="fltBase"></select>
+          </div>
+          <div class="filter-item">
+            <label>Менеджер</label>
+            <select class="field" id="fltManager"></select>
+          </div>
+          <div class="filter-item">
+            <label>Результат звонка</label>
+            <select class="field" id="fltResult"></select>
+          </div>
+          <label class="filter-check"><input type="checkbox" id="fltCallback"> только с назначенным перезвоном</label>
+          <button class="btn ghost btn-sm" id="fltReset">Сбросить отбор</button>
+        </div>
+
+        <section class="view" id="view-companies">
+          <div class="toolbar">
+            <input class="search" id="search" placeholder="Поиск по названию или ИНН…">
+            <button class="btn primary" id="btnImport">📥 Загрузить базу из Excel</button>
+            <button class="btn" id="btnMatch">🔄 Обновить статусы вебинара (по коду К7)</button>
+            <button class="btn" id="btnReport">📊 Сформировать отчёт</button>
+            <div class="spacer"></div>
+            <span id="selCount" style="font-size:12.5px; color:var(--ink-soft);"></span>
+            <select class="field" id="bulkManager" style="width:auto;">
+              <option value="">Назначить на…</option>
+            </select>
+            <button class="btn" id="btnAssign" disabled>Применить</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="grid">
+              <thead>
+                <tr>
+                  <th style="width:28px;"><input type="checkbox" id="checkAll"></th>
+                  <th>Компания</th>
+                  <th>Код К7 прелида</th>
+                  <th>Статус вебинара</th>
+                  <th>В работе у</th>
+                  <th>Последний результат</th>
+                  <th>Последний комментарий</th>
+                  <th>Когда перезвонить</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="view" id="view-funnel" hidden>
+          <div class="summary-row" id="funnelSummary"></div>
+          <div class="funnel-wrap" id="funnelWrap"></div>
+        </section>
+
+        <section class="view" id="view-presale" hidden>
+          <div class="summary-row" id="presaleSummary"></div>
+          <div class="toolbar">
+            <button class="btn primary" id="btnAddDeal">+ Добавить сделку</button>
+            <select class="field" id="fltPresaleStage" style="max-width:260px;"></select>
+            <div class="spacer"></div>
+            <span style="font-size:12px; color:var(--ink-faint);">Карточку можно перетащить в другую колонку</span>
+          </div>
+          <div class="presale-board" id="presaleBoard"></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="../node_modules/html2canvas/dist/html2canvas.min.js"></script>
+  <script src="demo-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
